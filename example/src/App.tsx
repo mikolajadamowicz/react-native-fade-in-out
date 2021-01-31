@@ -1,19 +1,21 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import FadeInOut from 'react-native-fade-in-out';
 
-
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [isVisible, setVisibility] = React.useState<boolean | undefined>();
 
-  React.useEffect(() => {
-    FadeInOut.multiply(3, 7).then(setResult);
-  }, []);
+  const onPress = () => setVisibility((visible) => !visible);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <TouchableOpacity onPress={onPress}>
+        <Text>Click to fade in / out</Text>
+      </TouchableOpacity>
+      <FadeInOut style={styles.fade} isVisible={isVisible} duration={1500}>
+        <Text>FADE IN / OUT TEXT</Text>
+      </FadeInOut>
     </View>
   );
 }
@@ -24,9 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  fade: {
+    marginTop: 40,
   },
 });
